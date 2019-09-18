@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        table {
+            width: 100%;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        table#t01 tr:nth-child(even) {
+            background-color: #eee;
+        }
+
+        table#t01 tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        table#t01 th {
+            background-color: black;
+            color: white;
+        }
+
+        textarea {
+            width: 750px;
+            height: 210px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Exercicios com Array e Tabelas</h2><br>
+
+    <textarea id="json"></textarea>
+    <input type="button" id="testar"  value="Testar" />
+    <div><br>
+        <label>Busca</label>
+        <input type="text" id="input" />
+    </div><br><br>
+    <div id="exibetabela"></div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script>
+        $(document).ready(function () {
+                let obj = JSON.parse($("#json").val())
+                let item = obj.carros
+
+                $("#testar").click(function(){
+                    var texto = ""
+
+                    texto += "<table id=t01><tr><th> FABRICANTE </th>" +
+                        "<th> MODELO </th>" +
+                        "<th> ANO </th>" +
+                        "<th> COMBUSTIVEL </th></tr>"
+
+                    for (let i = 0; i < 10; i++) {
+                        texto += `<tr><td> ${item[i].fabricante.toUpperCase()} </td>`
+                        texto += `<td> ${item[i].modelo.toUpperCase()} </td>`
+                        texto += `<td> ${item[i].ano.toUpperCase()} </td>`
+                        texto += `<td> ${item[i].combustivel.toUpperCase()} </td></tr>`
+                    }
+
+                    texto += "</table>"
+                    $("#exibetabela").html(texto);
+                })
+
+            $("#input").keyup(function () {
+                let value = $(this).val().toUpperCase();
+                $("#t01 tr").filter(function () {
+                    $(this).toggle($(this).text().toUpperCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
