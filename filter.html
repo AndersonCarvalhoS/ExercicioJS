@@ -21,15 +21,15 @@
             text-align: center;
         }
 
-        table#t01 tr:nth-child(even) {
+        tbody tr:nth-child(even) {
             background-color: #eee;
         }
 
-        table#t01 tr:nth-child(odd) {
+        tbody tr:nth-child(odd) {
             background-color: #fff;
         }
 
-        table#t01 th {
+        thead th{
             background-color: black;
             color: white;
         }
@@ -54,16 +54,19 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script>
         $(document).ready(function () {
-                let obj = JSON.parse($("#json").val())
+                let obj = $.parseJSON($("#json").val())
                 let item = obj.carros
 
                 $("#testar").click(function(){
                     var texto = ""
 
-                    texto += "<table id=t01><tr><th> FABRICANTE </th>" +
+                    texto += "<table id=t01><thead><tr>"+
+                        "<th> FABRICANTE </th>" +
                         "<th> MODELO </th>" +
                         "<th> ANO </th>" +
-                        "<th> COMBUSTIVEL </th></tr>"
+                        "<th> COMBUSTIVEL </th>"+
+                        "</tr></thead>"+
+                        "<tbody>"
 
                     for (let i = 0; i < 10; i++) {
                         texto += `<tr><td> ${item[i].fabricante.toUpperCase()} </td>`
@@ -72,13 +75,19 @@
                         texto += `<td> ${item[i].combustivel.toUpperCase()} </td></tr>`
                     }
 
-                    texto += "</table>"
+                    texto += "</tbody>"+
+                    "<tfoot>"
+                    "<tr><td></td>"+
+                    "<td></td>"+
+                    "<td></td>"+
+                    "<td></td>"+
+                    "</tr></tfoot></table>"
                     $("#exibetabela").html(texto);
                 })
 
             $("#input").keyup(function () {
                 let value = $(this).val().toUpperCase();
-                $("#t01 tr").filter(function () {
+                $("tbody tr").filter(function () {
                     $(this).toggle($(this).text().toUpperCase().indexOf(value) > -1)
                 });
             });
